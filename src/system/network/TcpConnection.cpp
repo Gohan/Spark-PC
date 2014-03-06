@@ -1,11 +1,13 @@
 #include "TcpConnection.h"
 #include "MessageEncoder.h"
+#include <boost/pointer_cast.hpp>
+#include <boost/shared_ptr.hpp>
 
 void CTcpConnection::SendAsync( sparks::shared_ptr<GameMessage::GameMessage> msg )
 {
 	// TODO 用IO的Post来同步数据发送
-	m_oSocket.get_io_service().post()
-	CMessageEncoder::EncodeGameMessage(*msg);
+	// m_oSocket.get_io_service().post()
+	CMessageEncoder::EncodeGameMessage(*msg.get());
 	bool bHasPendingWrite = m_deqMessage.size() > 0;
 	m_deqMessage.push_back(msg);
 	if (bHasPendingWrite == false) {
@@ -38,7 +40,7 @@ void CTcpConnection::DoNextWrite()
 		sparks::shared_ptr<GameMessage::GameMessage> msg = m_deqMessage.front();
 		boost::asio::async_write(m_oSocket, 
 			boost::asio::buffer(msg->SerializeAsString().c_str(), msg->ByteSize()), 
-			boost::bind(&CTcpConnection::HandleWrite, shared_from_this(), boost::asio::placeholders::error));
+			boost::bind(&CTcpConnection::HandleWrite, boost::dynamic_pointer_cast<CTcpConnection>(shared_from_this()), boost::asio::placeholders::error));
 	}
 }
 

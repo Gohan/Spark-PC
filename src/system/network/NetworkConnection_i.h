@@ -7,7 +7,7 @@ public:
 	boost::signals2::signal<void(const ::google::protobuf::Message& msg)> onMessage;
 	boost::signals2::signal<void()> onConnect;
 	boost::signals2::signal<void(sparks::int32 error_code)> onDisConnect;
-	virtual void SendAsync(sparks::shared_ptr<GameMessage::GameMessage> msg); = 0;
+	virtual void SendAsync(sparks::shared_ptr<GameMessage::GameMessage> msg) = 0;
 	virtual void Start() = 0;
 	virtual void Stop() = 0;
 };
