@@ -1,0 +1,23 @@
+package ScheduleMessage;
+message ScheduleMessage {
+	enum MessageType {
+		BasicScheduleEvent = 50;
+	}
+	message MessageBody {
+		extensions 50 to max;
+	} 
+	required MessageType msg_type = 1;
+	required MessageBody msg_body = 2;
+}
+
+message BasicScheduleEvent {
+	enum BasicEventType {
+		ENTER_STEP = 1;
+		LEAVE_STEP = 2;
+	}
+	optional BasicEventType basic_event_type = 1;
+}
+
+extend ScheduleMessage.MessageBody {
+	optional BasicScheduleEvent basic_schedule_event = 50;
+}

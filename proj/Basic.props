@@ -1,0 +1,42 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ImportGroup Label="PropertySheets" />
+  <PropertyGroup Label="UserMacros">
+    <Root>$(SolutionDir)..</Root>
+    <GoogleTestInclude>$(Root)\thirdparty\gtest-1.7.0\include</GoogleTestInclude>
+    <GoogleTestLib>$(Root)\thirdparty\gtest-1.7.0\lib</GoogleTestLib>
+    <BoostInclude>$(Root)\thirdparty\boost_1_54_0</BoostInclude>
+    <BoostLib>$(Root)\thirdparty\boost_1_54_0\lib</BoostLib>
+    <GoogleProtobufInclude>$(Root)\thirdparty\protobuf-2.5.0\src</GoogleProtobufInclude>
+    <GoogleProtobufLib>$(Root)\thirdparty\protobuf-2.5.0\lib</GoogleProtobufLib>
+  </PropertyGroup>
+  <PropertyGroup />
+  <ItemDefinitionGroup>
+    <ClCompile>
+      <PreprocessorDefinitions>_UNICODE;UNICODE;%(PreprocessorDefinitions);_VARIADIC_MAX=10;_WIN32_WINNT=0x0501</PreprocessorDefinitions>
+    </ClCompile>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <BuildMacro Include="Root">
+      <Value>$(Root)</Value>
+    </BuildMacro>
+    <BuildMacro Include="GoogleTestInclude">
+      <Value>$(GoogleTestInclude)</Value>
+    </BuildMacro>
+    <BuildMacro Include="GoogleTestLib">
+      <Value>$(GoogleTestLib)</Value>
+    </BuildMacro>
+    <BuildMacro Include="BoostInclude">
+      <Value>$(BoostInclude)</Value>
+    </BuildMacro>
+    <BuildMacro Include="BoostLib">
+      <Value>$(BoostLib)</Value>
+    </BuildMacro>
+    <BuildMacro Include="GoogleProtobufInclude">
+      <Value>$(GoogleProtobufInclude)</Value>
+    </BuildMacro>
+    <BuildMacro Include="GoogleProtobufLib">
+      <Value>$(GoogleProtobufLib)</Value>
+    </BuildMacro>
+  </ItemGroup>
+</Project>

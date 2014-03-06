@@ -1,0 +1,160 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{EFCD0531-39C5-4FF4-8E91-6FE9C9B93D24}</ProjectGuid>
+    <Keyword>Win32Proj</Keyword>
+    <RootNamespace>game</RootNamespace>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <PlatformToolset>v110</PlatformToolset>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset>v110</PlatformToolset>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="..\proj\Basic.props" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="..\proj\Basic.props" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <LinkIncremental>true</LinkIncremental>
+    <OutDir>$(SolutionDir)..\output\</OutDir>
+    <IntDir>$(SolutionDir)..\temp\$(Configuration)\</IntDir>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <LinkIncremental>false</LinkIncremental>
+    <OutDir>$(SolutionDir)..\output\</OutDir>
+    <IntDir>$(SolutionDir)..\temp\$(Configuration)\</IntDir>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <ClCompile>
+      <PrecompiledHeader>
+      </PrecompiledHeader>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>Disabled</Optimization>
+      <PreprocessorDefinitions>WIN32;_SCL_SECURE_NO_WARNINGS;_DEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <SDLCheck>false</SDLCheck>
+      <AdditionalIncludeDirectories>.;$(GoogleTestInclude);$(BoostInclude);$(GoogleProtobufInclude)</AdditionalIncludeDirectories>
+      <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
+    </ClCompile>
+    <Link>
+      <SubSystem>Console</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalLibraryDirectories>$(GoogleTestLib);$(BoostLib);$(GoogleProtobufLib)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>gtestd.lib;libprotobuf_d.lib;%(AdditionalDependencies)</AdditionalDependencies>
+    </Link>
+    <PreBuildEvent>
+      <Command>echo $(BoostInclude)</Command>
+    </PreBuildEvent>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <PrecompiledHeader>
+      </PrecompiledHeader>
+      <Optimization>MaxSpeed</Optimization>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <PreprocessorDefinitions>WIN32;_SCL_SECURE_NO_WARNINGS;NDEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <SDLCheck>true</SDLCheck>
+      <AdditionalIncludeDirectories>.;$(GoogleTestInclude);$(BoostInclude);$(GoogleProtobufInclude)</AdditionalIncludeDirectories>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+      <AdditionalLibraryDirectories>$(GoogleTestLib);$(BoostLib);$(GoogleProtobufLib)</AdditionalLibraryDirectories>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ClCompile Include="logic\instrument\GameContainer.cpp" />
+    <ClCompile Include="logic\proto\GameMessage.pb.cc" />
+    <ClCompile Include="logic\proto\ScheduleMessage.pb.cc" />
+    <ClCompile Include="logic\steps\AuctionStep.cpp" />
+    <ClCompile Include="logic\instrument\GameDataHolder.cpp" />
+    <ClCompile Include="logic\scheduler\LogicScheduler.cpp" />
+    <ClCompile Include="logic\instrument\HarvestSpace.cpp" />
+    <ClCompile Include="logic\steps\GameStep.cpp" />
+    <ClCompile Include="logic\instrument\Player.cpp" />
+    <ClCompile Include="logic\instrument\TechCardsMarket.cpp" />
+    <ClCompile Include="logic\steps\PreparationStep.cpp" />
+    <ClCompile Include="system\network\ListenerFactory.cpp" />
+    <ClCompile Include="system\network\MessageEncoder.cpp" />
+    <ClCompile Include="system\network\NetworkService.cpp" />
+    <ClCompile Include="system\network\TcpConnection.cpp" />
+    <ClCompile Include="system\network\TcpListener.cpp" />
+    <ClCompile Include="system\Thread.cpp" />
+    <ClCompile Include="system\ThreadManager.cpp" />
+    <ClCompile Include="test\GameContainerTest.cpp" />
+    <ClCompile Include="test\main.cpp" />
+    <ClCompile Include="test\MockClass\MockPlayer.cpp" />
+    <ClCompile Include="test\NetworkServiceTest.cpp" />
+    <ClCompile Include="test\PreparationStepTest.cpp" />
+    <ClCompile Include="test\ThreadTest.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="common\config.h" />
+    <ClInclude Include="logic\instrument\GameContainer.h" />
+    <ClInclude Include="logic\instrument\MessageDispatcher.h" />
+    <ClInclude Include="logic\proto\GameMessage.pb.h" />
+    <ClInclude Include="logic\proto\ScheduleMessage.pb.h" />
+    <ClInclude Include="logic\steps\AuctionStep.h" />
+    <ClInclude Include="logic\instrument\GameDataHolder.h" />
+    <ClInclude Include="logic\scheduler\LogicScheduler.h" />
+    <ClInclude Include="logic\instrument\HarvestSpace.h" />
+    <ClInclude Include="logic\steps\GameStep.h" />
+    <ClInclude Include="logic\instrument\Player.h" />
+    <ClInclude Include="logic\instrument\TechCardsMarket.h" />
+    <ClInclude Include="logic\steps\PreparationStep.h" />
+    <ClInclude Include="system\handler\LogicMessageHandler_i.h" />
+    <ClInclude Include="system\handler\NetworkMessageHandler_i.h" />
+    <ClInclude Include="system\network\ListenerFactory.h" />
+    <ClInclude Include="system\network\MessageEncoder.h" />
+    <ClInclude Include="system\network\NetworkService.h" />
+    <ClInclude Include="system\network\TcpConnection.h" />
+    <ClInclude Include="system\network\NetworkConnection_i.h" />
+    <ClInclude Include="system\network\NetworkListener.h" />
+    <ClInclude Include="system\network\NetworkListener_i.h" />
+    <ClInclude Include="system\network\TcpListener.h" />
+    <ClInclude Include="system\Thread.h" />
+    <ClInclude Include="system\ThreadManager.h" />
+    <ClInclude Include="test\GameContainerTest.h" />
+    <ClInclude Include="test\MockClass\MockPlayer.h" />
+    <ClInclude Include="test\NetworkServiceTest.h" />
+    <ClInclude Include="test\PreparationStepTest.h" />
+    <ClInclude Include="test\ThreadTest.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="logic\proto\GameMessage.proto" />
+    <None Include="logic\proto\ScheduleMessage.proto" />
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>

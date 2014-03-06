@@ -1,0 +1,123 @@
+package GameMessage;
+message GameMessage {
+
+	enum ClientType {
+		PC = 1;
+		Web = 2;
+		Android = 3;
+		IOS = 4;
+	}
+
+	message MessageHead {
+		required uint64 seq = 1;
+		required ClientType client_type = 2 [default = PC];
+		required uint32 body_size = 3;
+		required uint32 body_type = 4;
+	}
+
+	message MessageBody {
+		extensions 50 to max;
+	}
+
+	required MessageHead msg_head = 1;
+	required MessageBody msg_body = 2;
+}
+
+// Help Struct
+message Resource {
+	enum Type {
+		Crops = 0;
+		Berries = 1;
+		Fish = 2;
+		Bears = 3;
+		Mammoths = 4;
+	}
+	required Type type = 1;
+	required uint32 count = 2;
+}
+
+message PlayerResource {
+	required uint64 player_id = 1;
+	repeated Resource resource_list = 2;
+}
+
+
+// Body Messages
+message PlayerGamGeneralActionNotify {
+	enum Type {
+		ENTER_PREPARATION_STEP = 0;
+	}
+	required Type type = 1;
+}
+
+// 初始化, 随机发草药卡, 决定起始的顺序, 分配食物
+// 分配仓库的数据
+message PlayerEnterGameNotify {
+	required uint32 player_count = 1;
+	repeated uint64 player_ids = 2; // 玩家id
+	repeated uint32 card_ids = 3; // 技术卡id
+	repeated uint32 food_tokens = 4; // 食物token个数
+	repeated Resource resource_in_harvest = 5; // 在收获区的资源
+	repeated Resource resource_in_bank = 6; // 在银行区的资源
+}
+
+message PlayerChooseGameBoardReq {
+// 拍卖时候, 如果player_id的排位靠后, 可以直接抢到拍卖结果, 
+// 这时候直接给所有玩家广播拍卖结果就好了.
+	enum Angle {
+		R0 = 0;   // (0,0)(0,1)
+		R60 = 1;  // (0,0)(1,1)
+		R120 = 2; // (0,0)(1,0)
+		R180 = 3; // (0,1)(0,0)
+		R240 = 4; // (1,1)(0,0)
+		R300 = 5; // (1,0)(0,0)
+	}
+	required uint64 player_id = 1;
+	required uint32 gameboard_id = 2;
+	required uint32 pos_x = 3;
+	required uint32 pos_y = 4;
+	required Angle angle = 5;
+}
+
+message PlayerChooseGameBoardNotify {
+	optional uint64 next_player_id = 1;
+	optional PlayerChooseGameBoardReq player_choose = 2;
+}
+
+message PlayerHarvestAreaUpdateNotify {
+	repeated Resource resource_increasement = 1; // 每回合收获区增加的资源
+}
+
+message PlayerAuctionMessageReq {
+// 拍卖时候, 如果player_id的排位靠后, 可以直接抢到拍卖结果, 
+// 这时候直接给所有玩家广播拍卖结果就好了.
+	required uint64 player_id = 1;
+	required uint32 auction_card_index = 2;
+	optional bool auction_is_giveup = 3;
+}
+
+message PlayerAuctionBroadcast {
+// 通知现在拍卖状态改变.
+	required uint64 player_id = 1;
+	required uint32 auction_card_index = 2;
+	required bool auction_card_deal = 3; // 已经成交
+	required bool auction_card_giveup = 4;
+}
+
+extend GameMessage.MessageBody {
+	// 初始化, 随机发草药卡, 决定起始的顺序, 分配食物
+	// 分配仓库的数据
+	optional PlayerEnterGameNotify player_enter_game_notify = 90;
+	// 通用协议
+	optional PlayerGamGeneralActionNotify player_general_action_notify = 91;
+	// 玩家选择游戏版
+	optional PlayerChooseGameBoardReq player_choose_gameboard_req = 92;
+	// 服务器通知游戏板
+	// 玩家选择的结果, 下一个需要选择的玩家 
+	optional PlayerChooseGameBoardNotify player_choose_gameboard_notify = 93;
+	// 服务器通知更新收获区
+	optional PlayerHarvestAreaUpdateNotify player_harvest_area_update_notify = 94;
+	optional PlayerAuctionMessageReq player_auction_message_req = 101;
+	// 
+	optional PlayerAuctionBroadcast player_auction_broadcast = 102;
+}
